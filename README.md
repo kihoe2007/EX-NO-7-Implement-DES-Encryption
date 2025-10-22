@@ -13,10 +13,66 @@ To use the Data Encryption Standard (DES) algorithm for a practical application,
 
 ## Program:
 
+```
+#include <stdio.h>
+#include <string.h>
 
+void encrypt(char *message, char *key, char *encryptedMessage, int messageLength) {
+    int keyLength = strlen(key);
+    for (int i = 0; i < messageLength; i++) {
+        encryptedMessage[i] = message[i] ^ key[i % keyLength];
+    }
+    encryptedMessage[messageLength] = '\0';
+}
+
+void decrypt(char *encryptedMessage, char *key, char *decryptedMessage, int messageLength) {
+    int keyLength = strlen(key);
+    for (int i = 0; i < messageLength; i++) {
+        decryptedMessage[i] = encryptedMessage[i] ^ key[i % keyLength];
+    }
+    decryptedMessage[messageLength] = '\0';
+}
+
+int main() {
+    char message[100];
+    char key[100];
+
+    printf("\n**Simulation of DES encryption and decryption (XOR method)**\n\n");
+
+    printf("Enter the message to encrypt: ");
+    fgets(message, sizeof(message), stdin);
+    message[strcspn(message, "\n")] = '\0';
+
+    printf("Enter the encryption key: ");
+    fgets(key, sizeof(key), stdin);
+    key[strcspn(key, "\n")] = '\0';
+
+    int messageLength = strlen(message);
+    char encryptedMessage[100];
+    char decryptedMessage[100];
+
+    encrypt(message, key, encryptedMessage, messageLength);
+
+    printf("\nOriginal Message: %s\n", message);
+
+    printf("Encrypted Message (in HEX): ");
+    for (int i = 0; i < messageLength; i++) {
+        printf("%02X ", (unsigned char)encryptedMessage[i]);
+    }
+    printf("\n");
+
+    decrypt(encryptedMessage, key, decryptedMessage, messageLength);
+    printf("Decrypted Message: %s\n", decryptedMessage);
+
+    return 0;
+}
+
+```
 
 
 ## Output:
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/dfacf01a-ab0f-4a44-81a0-c49844ca8610" />
+<img width="1919" height="1148" alt="image" src="https://github.com/user-attachments/assets/541f464b-865b-4d90-ad4f-3acabfdfaabe" />
 
 
 ## Result:
